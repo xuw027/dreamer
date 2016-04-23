@@ -1,0 +1,8 @@
+http请求方式: GET
+https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+AppID(应用ID)wx5725631766f2c38d
+AppSecret(应用密钥)e41f1a862ea27a0e7c4d62dfcf943e99
+
+{"access_token":
+"wDKESr6BVe_abc4jQg8KijWDJknhlC6VUuV73XOp2aVcRN5qJkbmE_BLVkUYpiic12vsQERsNydilcoNrPcrF278pVH2YkbYDM5wTSPoLXUCOUfADAGSY"
+,"expires_in":7200}
