@@ -1,2 +1,1 @@
-this is a readme test
-this is second readme test
+1、所有的依赖包已经并入到https://github.com/xuw027/dreamer/tree/master/aliyunMessage/libs/message-1.0-SNAPSHOT-jar-with-dependencies.jar中
