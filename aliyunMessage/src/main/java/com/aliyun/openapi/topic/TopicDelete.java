@@ -27,7 +27,7 @@ public class TopicDelete {
          *该值必须要根据OnsRegionList方法获取的列表来选择和配置，因为OnsRegionId是变动的，不能够写固定值
          */
         SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-        for (int i=0;i<1000;i++){
+        for (int i=200;i<500;i++){
              OnsTopicDeleteRequest request =new OnsTopicDeleteRequest();
             request.setCluster("taobaodaily");
             request.setPreventCache(System.currentTimeMillis());
