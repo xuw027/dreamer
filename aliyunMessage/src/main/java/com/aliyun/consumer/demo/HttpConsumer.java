@@ -35,12 +35,12 @@ public class HttpConsumer {
         httpClient.setMaxConnectionsPerDestination(1);
         httpClient.start();
         Properties properties = ConfigUtil.getProps();
-        String topic=properties.getProperty("topic"); //请在user.properties配置您的topic
-        String url=properties.getProperty("url");//公测集群配置为http://publictest-rest.ons.aliyun.com/
-        //ONS的HTTP正式环境近期会上线，敬请期待
-        String ak=properties.getProperty("AccessKey");//请在user.properties配置您的accesskey
-        String sk=properties.getProperty("SecretKey");//请在user.properties配置您的secretkey
-        String cid=properties.getProperty("ConsumerId");//请在user.properties配置您的consumerId
+        String topic=properties.getProperty("topic"); //璇峰湪user.properties閰嶇疆鎮ㄧ殑topic
+        String url=properties.getProperty("url");//鍏祴闆嗙兢閰嶇疆涓篽ttp://publictest-rest.ons.aliyun.com/
+        //ONS鐨凥TTP姝ｅ紡鐜杩戞湡浼氫笂绾匡紝鏁鏈熷緟
+        String ak=properties.getProperty("AccessKey");//璇峰湪user.properties閰嶇疆鎮ㄧ殑accesskey
+        String sk=properties.getProperty("SecretKey");//璇峰湪user.properties閰嶇疆鎮ㄧ殑secretkey
+        String cid=properties.getProperty("ConsumerId");//璇峰湪user.properties閰嶇疆鎮ㄧ殑consumerId
         String date=String.valueOf(new Date().getTime());
         String sign=null;
         String NEWLINE="\n";

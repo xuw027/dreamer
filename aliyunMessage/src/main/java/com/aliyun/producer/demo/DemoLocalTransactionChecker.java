@@ -7,6 +7,6 @@ import com.aliyun.openservices.ons.api.transaction.TransactionStatus;
 public class DemoLocalTransactionChecker implements LocalTransactionChecker {
     public TransactionStatus check(Message msg) {
         System.out.println("begin check local transaction");
-        return TransactionStatus.CommitTransaction; //根据本地事务状态检查结果返回不同的TransactionStatus
+        return TransactionStatus.CommitTransaction; //鏍规嵁鏈湴浜嬪姟鐘舵�佹鏌ョ粨鏋滆繑鍥炰笉鍚岀殑TransactionStatus
     }
 }

@@ -14,7 +14,7 @@ public class DemoMessageListener implements MessageListener {
             //do something..
             return Action.CommitMessage;
         }catch (Exception e) {
-            //Ïû·ÑÊ§°Ü
+            //æ¶ˆè´¹å¤±è´¥
             return Action.ReconsumeLater;
         }
     }

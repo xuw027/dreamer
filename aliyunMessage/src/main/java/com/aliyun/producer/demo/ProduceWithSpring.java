@@ -14,34 +14,34 @@ import java.util.Properties;
 public class ProduceWithSpring {
     public static void main(String[] args) {
         /**
-         * Éú²úÕßBeanÅäÖÃÔÚproducer.xmlÖĞ,¿ÉÍ¨¹ıApplicationContext»ñÈ¡»òÕßÖ±½Ó×¢Èëµ½ÆäËûÀà(±ÈÈç¾ßÌåµÄController)ÖĞ.
+         * ç”Ÿäº§è€…Beané…ç½®åœ¨producer.xmlä¸­,å¯é€šè¿‡ApplicationContextè·å–æˆ–è€…ç›´æ¥æ³¨å…¥åˆ°å…¶ä»–ç±»(æ¯”å¦‚å…·ä½“çš„Controller)ä¸­.
          */
         ApplicationContext context = new ClassPathXmlApplicationContext("producer.xml");
         Properties properties = ConfigUtil.getProps();
         Producer producer = (Producer) context.getBean("producer");
-        //Ñ­»··¢ËÍÏûÏ¢
+        //å¾ªç¯å‘é€æ¶ˆæ¯
         for (int i = 0; i < 100; i++) {
             Message msg = new Message( //
                     // Message Topic
                     properties.getProperty("topic"),
                     // Message Tag,
-                    // ¿ÉÀí½âÎªGmailÖĞµÄ±êÇ©£¬¶ÔÏûÏ¢½øĞĞÔÙ¹éÀà£¬·½±ãConsumerÖ¸¶¨¹ıÂËÌõ¼şÔÚONS·şÎñÆ÷¹ıÂË
+                    // å¯ç†è§£ä¸ºGmailä¸­çš„æ ‡ç­¾ï¼Œå¯¹æ¶ˆæ¯è¿›è¡Œå†å½’ç±»ï¼Œæ–¹ä¾¿ConsumeræŒ‡å®šè¿‡æ»¤æ¡ä»¶åœ¨ONSæœåŠ¡å™¨è¿‡æ»¤
                     "TagA",
                     // Message Body
-                    // ÈÎºÎ¶ş½øÖÆĞÎÊ½µÄÊı¾İ£¬ ONS²»×öÈÎºÎ¸ÉÔ¤£¬
-                    // ĞèÒªProducerÓëConsumerĞ­ÉÌºÃÒ»ÖÂµÄĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯·½Ê½
+                    // ä»»ä½•äºŒè¿›åˆ¶å½¢å¼çš„æ•°æ®ï¼Œ ONSä¸åšä»»ä½•å¹²é¢„ï¼Œ
+                    // éœ€è¦Producerä¸Consumeråå•†å¥½ä¸€è‡´çš„åºåˆ—åŒ–å’Œååºåˆ—åŒ–æ–¹å¼
                     "Hello ONS".getBytes());
-            // ÉèÖÃ´ú±íÏûÏ¢µÄÒµÎñ¹Ø¼üÊôĞÔ£¬Çë¾¡¿ÉÄÜÈ«¾ÖÎ¨Ò»¡£
-            // ÒÔ·½±ãÄúÔÚÎŞ·¨Õı³£ÊÕµ½ÏûÏ¢Çé¿öÏÂ£¬¿ÉÍ¨¹ıONS Console²éÑ¯ÏûÏ¢²¢²¹·¢¡£
-            // ×¢Òâ£º²»ÉèÖÃÒ²²»»áÓ°ÏìÏûÏ¢Õı³£ÊÕ·¢
+            // è®¾ç½®ä»£è¡¨æ¶ˆæ¯çš„ä¸šåŠ¡å…³é”®å±æ€§ï¼Œè¯·å°½å¯èƒ½å…¨å±€å”¯ä¸€ã€‚
+            // ä»¥æ–¹ä¾¿æ‚¨åœ¨æ— æ³•æ­£å¸¸æ”¶åˆ°æ¶ˆæ¯æƒ…å†µä¸‹ï¼Œå¯é€šè¿‡ONS ConsoleæŸ¥è¯¢æ¶ˆæ¯å¹¶è¡¥å‘ã€‚
+            // æ³¨æ„ï¼šä¸è®¾ç½®ä¹Ÿä¸ä¼šå½±å“æ¶ˆæ¯æ­£å¸¸æ”¶å‘
             msg.setKey("ORDERID_100");
-            // ·¢ËÍÏûÏ¢£¬Ö»Òª²»Å×Òì³£¾ÍÊÇ³É¹¦
+            // å‘é€æ¶ˆæ¯ï¼Œåªè¦ä¸æŠ›å¼‚å¸¸å°±æ˜¯æˆåŠŸ
             try {
                 SendResult sendResult = producer.send(msg);
                 assert sendResult != null;
                 System.out.println("send success: " + sendResult.getMessageId());
             }catch (ONSClientException e) {
-                System.out.println("·¢ËÍÊ§°Ü");
+                System.out.println("å‘é€å¤±è´¥");
             }
 
         }

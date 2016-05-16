@@ -18,39 +18,39 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class TransactionProducerClient {
-    private final static Logger log = ClientLogger.getLog(); // ÓÃ»§ĞèÒªÉèÖÃ×Ô¼ºµÄlog, ¼ÇÂ¼ÈÕÖ¾±ãÓÚÅÅ²éÎÊÌâ
+    private final static Logger log = ClientLogger.getLog(); // ç”¨æˆ·éœ€è¦è®¾ç½®è‡ªå·±çš„log, è®°å½•æ—¥å¿—ä¾¿äºæ’æŸ¥é—®é¢˜
 
     public static void main(String[] args) throws InterruptedException {
-        final BusinessService businessService = new BusinessService(); // ±¾µØÒµÎñService
+        final BusinessService businessService = new BusinessService(); // æœ¬åœ°ä¸šåŠ¡Service
         Properties properties = ConfigUtil.getProps();
-        properties.put(PropertyKeyConst.ProducerId, properties.getProperty("ProducerId")); // ProducerIdĞèÒªÉèÖÃÄú×Ô¼ºµÄ
-        properties.put(PropertyKeyConst.AccessKey, properties.getProperty("AccessKey")); // AccessKey ĞèÒªÉèÖÃÄú×Ô¼ºµÄ
-        properties.put(PropertyKeyConst.SecretKey, properties.getProperty("SecretKey")); // SecretKey ĞèÒªÉèÖÃÄú×Ô¼ºµÄ
+        properties.put(PropertyKeyConst.ProducerId, properties.getProperty("ProducerId")); // ProducerIdéœ€è¦è®¾ç½®æ‚¨è‡ªå·±çš„
+        properties.put(PropertyKeyConst.AccessKey, properties.getProperty("AccessKey")); // AccessKey éœ€è¦è®¾ç½®æ‚¨è‡ªå·±çš„
+        properties.put(PropertyKeyConst.SecretKey, properties.getProperty("SecretKey")); // SecretKey éœ€è¦è®¾ç½®æ‚¨è‡ªå·±çš„
         TransactionProducer producer = ONSFactory.createTransactionProducer(properties,
                 new LocalTransactionCheckerImpl());
         producer.start();
         Message msg = new Message(properties.getProperty("topic"), "TagA", "Hello ONS transaction===".getBytes());
-        // topicĞèÒªÉèÖÃÄú×Ô¼ºµÄ
+        // topicéœ€è¦è®¾ç½®æ‚¨è‡ªå·±çš„
         SendResult sendResult = producer.send(msg, new LocalTransactionExecuter() {
 
             public TransactionStatus execute(Message msg, Object arg) {
-                // ÏûÏ¢ID(ÓĞ¿ÉÄÜÏûÏ¢ÌåÒ»Ñù£¬µ«ÏûÏ¢id²»Ò»Ñù, µ±Ç°ÏûÏ¢IDÔÚconsole¿ØÖÆ²»¿ÉÄÜ²éÑ¯)
+                // æ¶ˆæ¯ID(æœ‰å¯èƒ½æ¶ˆæ¯ä½“ä¸€æ ·ï¼Œä½†æ¶ˆæ¯idä¸ä¸€æ ·, å½“å‰æ¶ˆæ¯IDåœ¨consoleæ§åˆ¶ä¸å¯èƒ½æŸ¥è¯¢)
                 String msgId = msg.getMsgID();
-                // ÏûÏ¢ÌåÄÚÈİ½øĞĞcrc32, Ò²¿ÉÒÔÊ¹ÓÃÆäËüµÄÈçMD5
+                // æ¶ˆæ¯ä½“å†…å®¹è¿›è¡Œcrc32, ä¹Ÿå¯ä»¥ä½¿ç”¨å…¶å®ƒçš„å¦‚MD5
                 long crc32Id = HashUtil.crc32Code(msg.getBody());
-                // ÏûÏ¢IDºÍcrc32idÖ÷ÒªÊÇÓÃÀ´·ÀÖ¹ÏûÏ¢ÖØ¸´
-                // Èç¹ûÒµÎñ±¾ÉíÊÇÃİµÈµÄ, ¿ÉÒÔºöÂÔ, ·ñÔòĞèÒªÀûÓÃmsgId»òcrc32IdÀ´×öÃİµÈ
-                // Èç¹ûÒªÇóÏûÏ¢¾ø¶Ô²»ÖØ¸´, ÍÆ¼ö×ö·¨ÊÇ¶ÔÏûÏ¢ÌåbodyÊ¹ÓÃcrc32»òmd5À´·ÀÖ¹ÖØ¸´ÏûÏ¢.
+                // æ¶ˆæ¯IDå’Œcrc32idä¸»è¦æ˜¯ç”¨æ¥é˜²æ­¢æ¶ˆæ¯é‡å¤
+                // å¦‚æœä¸šåŠ¡æœ¬èº«æ˜¯å¹‚ç­‰çš„, å¯ä»¥å¿½ç•¥, å¦åˆ™éœ€è¦åˆ©ç”¨msgIdæˆ–crc32Idæ¥åšå¹‚ç­‰
+                // å¦‚æœè¦æ±‚æ¶ˆæ¯ç»å¯¹ä¸é‡å¤, æ¨èåšæ³•æ˜¯å¯¹æ¶ˆæ¯ä½“bodyä½¿ç”¨crc32æˆ–md5æ¥é˜²æ­¢é‡å¤æ¶ˆæ¯.
                 Object businessServiceArgs = new Object();
                 TransactionStatus transactionStatus = TransactionStatus.Unknow;
                 try {
                     boolean isCommit =
                             businessService.execbusinessService(businessServiceArgs);
                     if (isCommit) {
-                        // ±¾µØÊÂÎñ³É¹¦¡¢Ìá½»ÏûÏ¢
+                        // æœ¬åœ°äº‹åŠ¡æˆåŠŸã€æäº¤æ¶ˆæ¯
                         transactionStatus = TransactionStatus.CommitTransaction;
                     } else {
-                        // ±¾µØÊÂÎñÊ§°Ü¡¢»Ø¹öÏûÏ¢
+                        // æœ¬åœ°äº‹åŠ¡å¤±è´¥ã€å›æ»šæ¶ˆæ¯
                         transactionStatus = TransactionStatus.RollbackTransaction;
                     }
                 } catch (Exception e) {
@@ -61,7 +61,7 @@ public class TransactionProducerClient {
                 return transactionStatus;
             }
         }, null);
-        // demo example ·ÀÖ¹½ø³ÌÍË³ö(Êµ¼ÊÊ¹ÓÃ²»ĞèÒªÕâÑù)
+        // demo example é˜²æ­¢è¿›ç¨‹é€€å‡º(å®é™…ä½¿ç”¨ä¸éœ€è¦è¿™æ ·)
         TimeUnit.MILLISECONDS.sleep(Integer.MAX_VALUE);
     }
 }

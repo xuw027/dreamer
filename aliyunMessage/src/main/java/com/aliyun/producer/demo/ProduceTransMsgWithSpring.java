@@ -14,8 +14,8 @@ import java.util.Properties;
 public class ProduceTransMsgWithSpring {
     public static void main(String[] args) {
         /**
-         * ÊÂÎñÏûÏ¢Éú²úÕßBeanÅäÖÃÔÚtransactionProducer.xmlÖĞ,¿ÉÍ¨¹ıApplicationContext»ñÈ¡»òÕßÖ±½Ó×¢Èëµ½ÆäËûÀà(±ÈÈç¾ßÌåµÄController)ÖĞ.
-         * Çë½áºÏÀı×Ó"·¢ËÍÊÂÎñÏûÏ¢"
+         * äº‹åŠ¡æ¶ˆæ¯ç”Ÿäº§è€…Beané…ç½®åœ¨transactionProducer.xmlä¸­,å¯é€šè¿‡ApplicationContextè·å–æˆ–è€…ç›´æ¥æ³¨å…¥åˆ°å…¶ä»–ç±»(æ¯”å¦‚å…·ä½“çš„Controller)ä¸­.
+         * è¯·ç»“åˆä¾‹å­"å‘é€äº‹åŠ¡æ¶ˆæ¯"
          */
         ApplicationContext context = new ClassPathXmlApplicationContext("transactionProducer.xml");
 
@@ -26,7 +26,7 @@ public class ProduceTransMsgWithSpring {
         SendResult sendResult = transactionProducer.send(msg, new LocalTransactionExecuter() {
             public TransactionStatus execute(Message msg, Object arg) {
                 System.out.println("executor local transaction");
-                return TransactionStatus.CommitTransaction; //¸ù¾İ±¾µØÊÂÎñÖ´ĞĞ½á¹ûÀ´·µ»Ø²»Í¬µÄTransactionStatus
+                return TransactionStatus.CommitTransaction; //æ ¹æ®æœ¬åœ°äº‹åŠ¡æ‰§è¡Œç»“æœæ¥è¿”å›ä¸åŒçš„TransactionStatus
             }
         }, null);
     }

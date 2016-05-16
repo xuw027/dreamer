@@ -18,7 +18,7 @@ public class ProducerClient {
         Properties properties = ConfigUtil.getProps();
         Producer producer = ONSFactory.createProducer(properties);
         SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //ÔÚ·¢ËÍÏûÏ¢Ç°£¬±ØĞëµ÷ÓÃstart·½·¨À´Æô¶¯Producer£¬Ö»Ğèµ÷ÓÃÒ»´Î¼´¿É¡£
+        //åœ¨å‘é€æ¶ˆæ¯å‰ï¼Œå¿…é¡»è°ƒç”¨startæ–¹æ³•æ¥å¯åŠ¨Producerï¼Œåªéœ€è°ƒç”¨ä¸€æ¬¡å³å¯ã€‚
         producer.start();
         int i=0;
         while (i<10)
@@ -27,26 +27,26 @@ public class ProducerClient {
                     //Message Topic
                     properties.getProperty("topic"),
                     //Message Tag,
-                    //¿ÉÀí½âÎªGmailÖĞµÄ±êÇ©£¬¶ÔÏûÏ¢½øĞĞÔÙ¹éÀà£¬·½±ãConsumerÖ¸¶¨¹ıÂËÌõ¼şÔÚONS·şÎñÆ÷¹ıÂË
+                    //å¯ç†è§£ä¸ºGmailä¸­çš„æ ‡ç­¾ï¼Œå¯¹æ¶ˆæ¯è¿›è¡Œå†å½’ç±»ï¼Œæ–¹ä¾¿ConsumeræŒ‡å®šè¿‡æ»¤æ¡ä»¶åœ¨ONSæœåŠ¡å™¨è¿‡æ»¤
                     "TagA",
                     //Message Body
-                    //ÈÎºÎ¶ş½øÖÆĞÎÊ½µÄÊı¾İ£¬ONS²»×öÈÎºÎ¸ÉÔ¤£¬ĞèÒªProducerÓëConsumerĞ­ÉÌºÃÒ»ÖÂµÄĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯·½Ê½
+                    //ä»»ä½•äºŒè¿›åˆ¶å½¢å¼çš„æ•°æ®ï¼ŒONSä¸åšä»»ä½•å¹²é¢„ï¼Œéœ€è¦Producerä¸Consumeråå•†å¥½ä¸€è‡´çš„åºåˆ—åŒ–å’Œååºåˆ—åŒ–æ–¹å¼
                     ("msg:"+fmt.format(new Date())).getBytes()
             );
 
-            // ÉèÖÃ´ú±íÏûÏ¢µÄÒµÎñ¹Ø¼üÊôĞÔ£¬Çë¾¡¿ÉÄÜÈ«¾ÖÎ¨Ò»¡£
-            // ÒÔ·½±ãÄúÔÚÎŞ·¨Õı³£ÊÕµ½ÏûÏ¢Çé¿öÏÂ£¬¿ÉÍ¨¹ıONS Console²éÑ¯ÏûÏ¢²¢²¹·¢¡£
-            // ×¢Òâ£º²»ÉèÖÃÒ²²»»áÓ°ÏìÏûÏ¢Õı³£ÊÕ·¢
+            // è®¾ç½®ä»£è¡¨æ¶ˆæ¯çš„ä¸šåŠ¡å…³é”®å±æ€§ï¼Œè¯·å°½å¯èƒ½å…¨å±€å”¯ä¸€ã€‚
+            // ä»¥æ–¹ä¾¿æ‚¨åœ¨æ— æ³•æ­£å¸¸æ”¶åˆ°æ¶ˆæ¯æƒ…å†µä¸‹ï¼Œå¯é€šè¿‡ONS ConsoleæŸ¥è¯¢æ¶ˆæ¯å¹¶è¡¥å‘ã€‚
+            // æ³¨æ„ï¼šä¸è®¾ç½®ä¹Ÿä¸ä¼šå½±å“æ¶ˆæ¯æ­£å¸¸æ”¶å‘
             msg.setKey("ORDERID_"+System.nanoTime());
 
-            //·¢ËÍÏûÏ¢£¬Ö»Òª²»Å×Òì³£¾ÍÊÇ³É¹¦
+            //å‘é€æ¶ˆæ¯ï¼Œåªè¦ä¸æŠ›å¼‚å¸¸å°±æ˜¯æˆåŠŸ
             SendResult sendResult = producer.send(msg);
             System.out.println(sendResult);
             i++;
         }
 
-        // ÔÚÓ¦ÓÃÍË³öÇ°£¬Ïú»ÙProducer¶ÔÏó
-        // ×¢Òâ£ºÈç¹û²»Ïú»ÙÒ²Ã»ÓĞÎÊÌâ
+        // åœ¨åº”ç”¨é€€å‡ºå‰ï¼Œé”€æ¯Producerå¯¹è±¡
+        // æ³¨æ„ï¼šå¦‚æœä¸é”€æ¯ä¹Ÿæ²¡æœ‰é—®é¢˜
         producer.shutdown();
     }
 }

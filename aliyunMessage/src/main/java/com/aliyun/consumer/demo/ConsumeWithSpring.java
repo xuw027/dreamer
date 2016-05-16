@@ -7,7 +7,7 @@ public class ConsumeWithSpring {
     public static void main(String[] args) {
 
         /**
-         * Ïû·ÑÕßBeanÅäÖÃÔÚconsumer.xmlÖĞ,¿ÉÍ¨¹ıApplicationContext»ñÈ¡»òÕßÖ±½Ó×¢Èëµ½ÆäËûÀà(±ÈÈç¾ßÌåµÄController)ÖĞ.
+         * æ¶ˆè´¹è€…Beané…ç½®åœ¨consumer.xmlä¸­,å¯é€šè¿‡ApplicationContextè·å–æˆ–è€…ç›´æ¥æ³¨å…¥åˆ°å…¶ä»–ç±»(æ¯”å¦‚å…·ä½“çš„Controller)ä¸­.
          */
         ApplicationContext context = new ClassPathXmlApplicationContext("consumer.xml");
         System.out.println("Consumer Started");

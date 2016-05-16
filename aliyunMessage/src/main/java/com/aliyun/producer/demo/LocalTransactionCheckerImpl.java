@@ -13,23 +13,23 @@ public class LocalTransactionCheckerImpl implements LocalTransactionChecker {
     final BusinessService businessService = new BusinessService();
 
     public TransactionStatus check(Message msg) {
-        //ÏûÏ¢ID(ÓĞ¿ÉÄÜÏûÏ¢ÌåÒ»Ñù£¬µ«ÏûÏ¢id²»Ò»Ñù, µ±Ç°ÏûÏ¢IDÔÚconsole¿ØÖÆ²»¿ÉÄÜ²éÑ¯)
+        //æ¶ˆæ¯ID(æœ‰å¯èƒ½æ¶ˆæ¯ä½“ä¸€æ ·ï¼Œä½†æ¶ˆæ¯idä¸ä¸€æ ·, å½“å‰æ¶ˆæ¯IDåœ¨consoleæ§åˆ¶ä¸å¯èƒ½æŸ¥è¯¢)
         String msgId = msg.getMsgID();
-        //ÏûÏ¢ÌåÄÚÈİ½øĞĞcrc32, Ò²¿ÉÒÔÊ¹ÓÃÆäËüµÄ·½·¨ÈçMD5
+        //æ¶ˆæ¯ä½“å†…å®¹è¿›è¡Œcrc32, ä¹Ÿå¯ä»¥ä½¿ç”¨å…¶å®ƒçš„æ–¹æ³•å¦‚MD5
         long crc32Id = HashUtil.crc32Code(msg.getBody());
-        //ÏûÏ¢ID¡¢ÏûÏ¢±¾body crc32IdÖ÷ÒªÊÇÓÃÀ´·ÀÖ¹ÏûÏ¢ÖØ¸´
-        //Èç¹ûÒµÎñ±¾ÉíÊÇÃİµÈµÄ, ¿ÉÒÔºöÂÔ, ·ñÔòĞèÒªÀûÓÃmsgId»òcrc32IdÀ´×öÃİµÈ
-        //Èç¹ûÒªÇóÏûÏ¢¾ø¶Ô²»ÖØ¸´, ÍÆ¼ö×ö·¨ÊÇ¶ÔÏûÏ¢ÌåbodyÊ¹ÓÃcrc32»òmd5À´·ÀÖ¹ÖØ¸´ÏûÏ¢.
-        //ÒµÎñ×Ô¼ºµÄ²ÎÊı¶ÔÏó, ÕâÀïÖ»ÊÇÒ»¸öÊ¾Àı, Êµ¼ÊĞèÒªÓÃ»§¸ù¾İÇé¿öÀ´´¦Àí
+        //æ¶ˆæ¯IDã€æ¶ˆæ¯æœ¬body crc32Idä¸»è¦æ˜¯ç”¨æ¥é˜²æ­¢æ¶ˆæ¯é‡å¤
+        //å¦‚æœä¸šåŠ¡æœ¬èº«æ˜¯å¹‚ç­‰çš„, å¯ä»¥å¿½ç•¥, å¦åˆ™éœ€è¦åˆ©ç”¨msgIdæˆ–crc32Idæ¥åšå¹‚ç­‰
+        //å¦‚æœè¦æ±‚æ¶ˆæ¯ç»å¯¹ä¸é‡å¤, æ¨èåšæ³•æ˜¯å¯¹æ¶ˆæ¯ä½“bodyä½¿ç”¨crc32æˆ–md5æ¥é˜²æ­¢é‡å¤æ¶ˆæ¯.
+        //ä¸šåŠ¡è‡ªå·±çš„å‚æ•°å¯¹è±¡, è¿™é‡Œåªæ˜¯ä¸€ä¸ªç¤ºä¾‹, å®é™…éœ€è¦ç”¨æˆ·æ ¹æ®æƒ…å†µæ¥å¤„ç†
         Object businessServiceArgs = new Object();
         TransactionStatus transactionStatus = TransactionStatus.Unknow;
         try {
             boolean isCommit = businessService.checkbusinessService(businessServiceArgs);
             if (isCommit) {
-                //±¾µØÊÂÎñÒÑ³É¹¦¡¢Ìá½»ÏûÏ¢
+                //æœ¬åœ°äº‹åŠ¡å·²æˆåŠŸã€æäº¤æ¶ˆæ¯
                 transactionStatus = TransactionStatus.CommitTransaction;
             } else {
-                //±¾µØÊÂÎñÒÑÊ§°Ü¡¢»Ø¹öÏûÏ¢
+                //æœ¬åœ°äº‹åŠ¡å·²å¤±è´¥ã€å›æ»šæ¶ˆæ¯
                 transactionStatus = TransactionStatus.RollbackTransaction;
             }
         } catch (Exception e) {
