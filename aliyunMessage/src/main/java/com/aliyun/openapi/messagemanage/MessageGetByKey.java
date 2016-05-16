@@ -8,8 +8,7 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.FormatType;
 import com.aliyuncs.ons.model.v20160503.OnsMessageGetByKeyRequest;
 import com.aliyuncs.ons.model.v20160503.OnsMessageGetByKeyResponse;
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import java.util.List;
 
@@ -47,8 +46,6 @@ public class MessageGetByKey {
         } catch (ServerException e) {
             e.printStackTrace();
         } catch (ClientException e) {
-            e.printStackTrace();
-        } catch (Base64DecodingException e) {
             e.printStackTrace();
         }
     }

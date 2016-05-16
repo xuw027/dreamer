@@ -8,8 +8,6 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.FormatType;
 import com.aliyuncs.ons.model.v20160503.OnsMessageGetByMsgIdRequest;
 import com.aliyuncs.ons.model.v20160503.OnsMessageGetByMsgIdResponse;
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 /**
  根据MsgID查询消息
@@ -31,7 +29,7 @@ public class MessageGetByMsgId {
         try {
             OnsMessageGetByMsgIdResponse response = iAcsClient.getAcsResponse(request);
             OnsMessageGetByMsgIdResponse.Data data =response.getData();
-            byte[] msgbody= Base64.decode(data.getBody());
+            byte[] msgbody= data.getBody().getBytes();
             String message= new String(msgbody);
             System.out.println(data.getTopic()+"  "+
                     message+"  "+
@@ -44,8 +42,6 @@ public class MessageGetByMsgId {
         } catch (ServerException e) {
             e.printStackTrace();
         } catch (ClientException e) {
-            e.printStackTrace();
-        } catch (Base64DecodingException e) {
             e.printStackTrace();
         }
     }
