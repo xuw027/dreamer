@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="msgListener" class="com.aliyun.listener.DemoMessageListener"></bean> <!--Listener配置-->
+
+    <bean id="consumer" class="com.aliyun.openservices.ons.api.bean.ConsumerBean" init-method="start" destroy-method="shutdown">
+        <property name="properties" > <!--消费者配置信息-->
+            <props>
+                <prop key="ConsumerId">CID_MESSAGE</prop> <!--请替换XXX-->
+                <prop key="AccessKey">wwwJeU6QFhw8Dbd4</prop>
+                <prop key="SecretKey">KHwJ7ooNTEPLziyPuy9K4vBib2k4Mn</prop>
+                <!--将消费者线程数固定为50个.
+                <prop key="ConsumeThreadNums">50</prop>
+                -->
+            </props>
+        </property>
+        <property name="subscriptionTable">
+            <map>
+                <entry value-ref="msgListener">
+                    <key>
+                        <bean class="com.aliyun.openservices.ons.api.bean.Subscription">
+                            <property name="topic" value="topic_20160513001"/>
+                            <property name="expression" value="*"/>
+                        </bean>
+                    </key>
+                </entry>
+                <!--更多的订阅添加entry节点即可-->
+            </map>
+        </property>
+    </bean>
+
+</beans>
