@@ -7,6 +7,10 @@ import java.util.Properties;
 
 public class ConfigUtil {
 
+    public static String get(String key){
+        Properties props=getProps();
+        return props.getProperty(key);
+    }
     public static Properties getProps()
     {
         InputStream ins=null;
